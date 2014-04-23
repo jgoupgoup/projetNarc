@@ -162,15 +162,22 @@ Window* Window::refreshTops(){
 
 
 Window* Window::refreshArcs(){
+
     vector<Narc*> list = Narc::getList() ;
 
     /* Refresh thickness */
     float max = -9999999999 ;
     float min = 99999999999 ;
-    for(int i = 0 ; i < list.size() ; i++ ){
-        Narc* arc = list[i] ;
+    for(int i = 0 ; i < Narc::list.size() ; i++ ){
+        Narc* arc = Narc::list[i] ;
         if(arc->getPheromone() < min) min = arc->getPheromone() ;
         if(arc->getPheromone() > max ) max = arc->getPheromone() ;
+    }
+
+    for(int i = 0 ; i < Narc::list.size() ; i++ ){
+        Narc* arc = Narc::list[i] ;
+        arc->getGraphic()->setThickness((((arc->getPheromone() - min) / max)*4.9)+1.1) ;
+        cout << (((arc->getPheromone() - min) / max)*4.9)+1.1 << endl ;
     }
 
     for(int i = 0 ; i < list.size() ; i++ ) {
@@ -321,15 +328,28 @@ void Window::on_activeInverseArcButton_clicked(){
 }
 
 void Window::on_startApplication_clicked(){
+    QMessageBox messageBox;
     if(!Parameters::isApplicationStarted()){
-        if(Parameters::getStartTop() == NULL || Parameters::getEndTop() == NULL){
-            QMessageBox messageBox;
-            messageBox.critical(0,"Error","Merci de définir un point dfe départ et un point d'arrivée");
+        if(Parameters::getStartTop() == NULL || Parameters::getEndTop() == NULL || Parameters::getStartTop() == Parameters::getEndTop()){
+            messageBox.critical(0,"Error","Merci de définir un point de départ et un point d'arrivée différents");
             return ;
         }
+        else
+            messageBox.critical(0,"Error","C'est coool !");
+
         Ant::resetAll() ;
+
     }
+
+
+
     Parameters::switchApplicationStartState() ;
+
+    if(Parameters::isApplicationStarted()){
+
+        Intelligence::runTest() ;
+    }
+
     Window::refreshForm() ;
 }
 
