@@ -341,8 +341,6 @@ void Window::on_startApplication_clicked(){
 
     }
 
-
-
     Parameters::switchApplicationStartState() ;
 
     if(Parameters::isApplicationStarted()){
