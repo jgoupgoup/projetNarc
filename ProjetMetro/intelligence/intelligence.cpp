@@ -12,25 +12,35 @@ void Intelligence::creationFourmis(int nbFourmis){
 
 void Intelligence::run(){
     while(1){
-        if(Parameters::isApplicationStarted()){
+        if(Parameters::isApplicationStarted()) {
             for(int j=0; j<Ant::list.size(); j++){
                 Ant* ant = Ant::list[j];
-                    /*for(int k=0 ; k < Narc::listAroundUnvisitedNarcs() ; k++){
+                //Elle tire un narcs aléatoirement pondéramment
+                //Elle ajoute le narc tiré dans sa liste de narcs parcourus
+                //Elle va au top suivant
 
-                        //Elle tire un narcs aléatoirement pondéramment
+                Narc* narcChoosed = NULL;
+                narcChoosed = Narc::getBestNarcFrom(ant->getListAroundUnvisitedNarcs()) ;
 
-                        //Elle ajoute le narc tiré dans sa liste de narcs parcourus
 
-                        //Elle va au top suivant
-                    }*/
-                }
-                else{ //c'est qu'elle est rendue à la destination
-                    //pour tous les nars de sa liste
-                    //elle incremente les pheromones
-                    //fin pour
-                    //reset de la fourmi
-                }
+
+                    //On choisi le premier narc de la liste comme élu
+        //            Arc* narcChoosed = ant->getListAroundUnvisitedNarcs()[0];
+
+                    //On parcours le reste de la liste
+          //          for(int k=1 ; k < ant->getListAroundUnvisitedNarcs() ; k++){
+                        //on vérifie si l'arc en question n'est pas meilleur à choisir
+            //            if(ant->getListAroundUnvisitedNarcs()[k].getWeight() > narcChoosed.getWeight())
+                            //si c'est le cas, on le prend
+              //              poidsNarcChoosed = ant->getListAroundUnvisitedNarcs()[k].getWeight();
+
             }
+        }
+        else{ //c'est qu'elle est rendue à la destination
+            //pour tous les nars de sa liste
+                //elle incremente les pheromones
+            //fin pour
+            //reset de la fourmi
         }
     }
 }

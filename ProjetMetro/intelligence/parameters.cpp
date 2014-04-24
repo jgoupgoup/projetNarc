@@ -1,8 +1,8 @@
 #include "../main.h"
 
 bool Parameters::applicationStarted = false ;
-bool Parameters::phermomonesIncrement = 1 ;
-bool Parameters::phermomonesDecrement = 0.002 ;
+float Parameters::phermomonesIncrement = 1 ;
+float Parameters::phermomonesDecrement = 0.002 ;
 
 Top* Parameters::startTop = NULL ;
 Top* Parameters::endTop = NULL ;

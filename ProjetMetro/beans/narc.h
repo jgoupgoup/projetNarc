@@ -14,6 +14,7 @@ private:
     bool availability ;
     NarcGraphic* graphic ;
     Track* track ;
+    float score;
 
     static Narc* weightestNarc ;
     static Narc* mostPheromonedNarc ;
@@ -62,6 +63,9 @@ public:
 
     static Narc* getMostPheromonedNarc() ;
     static void setMostPheromonedNarc(Narc* arc) ;
+
+    static Narc* getBestNarcFrom(vector<Narc*> listOfNarcs);
+    Narc* getScore();
 };
 
 #endif // ARC_H

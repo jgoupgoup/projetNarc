@@ -9,7 +9,7 @@ DataLoad::DataLoad() {
 void DataLoad::go(){
     DataLoad::tops() ;
     DataLoad::arcs() ;
-    Narc::defineWeigthestArc() ;
+    Narc::defineWeightestNarc() ;
     DataLoad::tracks() ;
     DataLoad::preciseArcs() ;
 }
