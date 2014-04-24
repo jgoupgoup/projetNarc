@@ -15,10 +15,22 @@ static void Intelligence::run(){
         if(Parameters::isApplicationStarted()){
             for(int j=0; j<Ant::list.size(); j++){
                 Ant* ant = Ant::list[j];
-                if(ant->getCurrentTop()==Parameters::getEndTop()){
+                if(ant->getCurrentTop()!=Parameters::getEndTop()){
+                    //Elle regarde les arcs qu'elle a autour d'elle (non visité)
                     /*for(int k=0 ; k < Narc::listAroundUnvisitedNarcs() ; k++){
 
+                        //Elle tire un narcs aléatoirement pondéramment
+
+                        //Elle ajoute le narc tiré dans sa liste de narcs parcourus
+
+                        //Elle va au top suivant
                     }*/
+                }
+                else{ //c'est qu'elle est rendue à la destination
+                    //pour tous les nars de sa liste
+                    //elle incremente les pheromones
+                    //fin pour
+                    //reset de la fourmi
                 }
             }
         }
