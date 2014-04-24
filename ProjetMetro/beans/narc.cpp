@@ -50,3 +50,27 @@ Narc* Narc::getInverseArc(){
     }
     return(NULL) ;
 }
+
+Narc* Narc::getBestNarcFrom(vector<Narc*> listOfNarcs){
+    //On choisi le premier narc de la liste comme élu
+    Arc* narcChoosed = listOfNarcs[0];
+
+    //On parcours le reste de la liste
+    for(int k=1 ; k < listOfNarcs.size() ; k++){
+        //on vérifie si l'arc en question n'est pas meilleur à choisir
+        Narc* narcEnCours = listOfNarcs[k];
+        if(narcEnCours.getScore() > narcChoosed.getScore())
+            //si c'est le cas, on le prend
+            narcChoosed = narcEnCours;
+        }
+    return(narcChoosed);
+}
+
+Narc* Narc::getScore(Narc* narc){
+    float poidsNarc = (Narc::getWeightestNarc() - this->getWeight()) / Narc::getWeightestNarc();
+    float pheromoneNarc = this->getPheromone() / Narc::getMostPheromonedNarc();
+    float scoreNarc = (poidsNarc + pheromoneNarc) /2;
+    this->score = scoreNarc;
+
+    return(this);
+}

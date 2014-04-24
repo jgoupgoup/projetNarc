@@ -14,6 +14,7 @@ private:
     bool availability ;
     NarcGraphic* graphic ;
     Track* track ;
+    float score;
 
 public:
     //Constructeur
@@ -52,6 +53,9 @@ public:
     Narc* setGraphic(NarcGraphic* arcGraphic);
 
     Narc* getInverseArc() ;
+
+    Narc* getBestNarcFrom(vector<Narc*> listOfNarcs);
+    Narc* getScore(Narc* narc);
 };
 
 #endif // ARC_H

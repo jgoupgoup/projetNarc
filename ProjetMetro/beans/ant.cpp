@@ -32,7 +32,7 @@ Ant* Ant::setCurrentTop(Top* currentTop){
     this->currentTop = currentTop;
     return this;
 }
-vector<Narc*> Ant::listAroundUnvisitedNarcs(){
+vector<Narc*> Ant::getListAroundUnvisitedNarcs(){
     vector<Narc*> listAroundUnvisitedNarcs;
     vector<Narc*> listAroundNarcs = this->getListAroundNarcs();
     for(int i=0; i<listAroundNarcs.size(); i++){

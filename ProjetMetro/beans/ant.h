@@ -31,7 +31,7 @@ public:
     Ant* setCurrentTop(Top* currentTop);
     Top* getCurrentTop();
     vector<Narc*> getVisitedArcs();
-    vector<Narc*> listAroundUnvisitedNarcs();
+    vector<Narc*> getListAroundUnvisitedNarcs();
     vector<Narc*> getListAroundNarcs();
 };
 
