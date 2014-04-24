@@ -15,6 +15,9 @@ private:
     NarcGraphic* graphic ;
     Track* track ;
 
+    static Narc* weightestNarc ;
+    static Narc* mostPheromonedNarc ;
+
 public:
     //Constructeur
     Narc();
@@ -52,6 +55,13 @@ public:
     Narc* setGraphic(NarcGraphic* arcGraphic);
 
     Narc* getInverseArc() ;
+
+    static Narc* getWeightestNarc() ;
+    static void setWeightestNarc(Narc* arc) ;
+    static void defineWeightestNarc() ;
+
+    static Narc* getMostPheromonedNarc() ;
+    static void setMostPheromonedNarc(Narc* arc) ;
 };
 
 #endif // ARC_H

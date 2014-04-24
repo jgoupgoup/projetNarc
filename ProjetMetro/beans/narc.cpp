@@ -10,6 +10,10 @@ Narc* Narc::getById(int id){
     }
 }
 
+Narc* Narc::weightestNarc = NULL ;
+Narc* Narc::mostPheromonedNarc = NULL ;
+
+
 Narc::Narc(){
     this->id = list.size();
     this->setAvailability(true) ;
@@ -34,7 +38,13 @@ Track* Narc::getTrack(){ return(this->track);}
 Narc* Narc::setTrack(Track* track){ this->track = track ; return(this) ; }
 
 float Narc::getPheromone(){ return(this->pheromone);}
-Narc* Narc::setPheromone(float pheromone){ this->pheromone = pheromone ; return(this) ; }
+Narc* Narc::setPheromone(float pheromone){
+    this->pheromone = pheromone ;
+    if(Narc::getMostPheromonedNarc() == NULL) Narc::setMostPheromonedNarc(this) ;
+    else if(Narc::getMostPheromonedNarc()->getPheromone() > this->getPheromone())
+        Narc::setMostPheromonedNarc(this) ;
+    return(this) ;
+}
 
 NarcGraphic* Narc::getGraphic(){ return(this->graphic) ; }
 Narc* Narc::setGraphic(NarcGraphic* arcGraphic){ this->graphic = arcGraphic ; return(this) ; }
@@ -50,3 +60,17 @@ Narc* Narc::getInverseArc(){
     }
     return(NULL) ;
 }
+
+Narc* Narc::getWeightestNarc(){ return(Narc::weightestNarc) ; }
+void Narc::setWeightestNarc(Narc* arc){ Narc::weightestNarc = arc ; }
+void Narc::defineWeightestNarc(){
+    for(int i = 0 ; i < Narc::list->size() ; i++){
+        Narc* arc = Narc::list[i] ;
+        if(Narc::getWeightestNarc() == NULL) Narc::setWeightestNarc(arc) ;
+        else if(Narc::getWeightestNarc()->getWeight() > arc->getWeight())
+            Narc::setWeightestNarc(arc) ;
+    }
+}
+
+Narc* Narc::getMostPheromonedNarc(){ return(Narc::mostPheromonedNarc) ; }
+void Narc::setMostPheromonedNarc(Narc* arc){ Narc::mostPheromonedNarc = arc ; }

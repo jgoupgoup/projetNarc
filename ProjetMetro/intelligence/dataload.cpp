@@ -4,6 +4,16 @@ DataLoad::DataLoad() {
 
 }
 
+
+
+void DataLoad::go(){
+    DataLoad::tops() ;
+    DataLoad::arcs() ;
+    Narc::defineWeigthestArc() ;
+    DataLoad::tracks() ;
+    DataLoad::preciseArcs() ;
+}
+
 void DataLoad::tops(){
     (new Top(0))->setX(308)->setY(536)->setName("Abbesses") ;
     (new Top(1))->setX(472)->setY(386)->setName("Alexandre Dumas") ;

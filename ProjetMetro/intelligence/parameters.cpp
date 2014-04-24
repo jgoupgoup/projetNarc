@@ -1,6 +1,8 @@
 #include "../main.h"
 
 bool Parameters::applicationStarted = false ;
+bool Parameters::phermomonesIncrement = 1 ;
+bool Parameters::phermomonesDecrement = 0.002 ;
 
 Top* Parameters::startTop = NULL ;
 Top* Parameters::endTop = NULL ;
@@ -9,6 +11,15 @@ Narc* Parameters::hoveredNarc = NULL ;
 Narc* Parameters::activeNarc = NULL ;
 
 Parameters::Parameters(){}
+
+float Parameters::random(float min, float max)
+{
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float diff = max - min;
+    float r = random * diff;
+    return min + r;
+}
+
 
 Top* Parameters::getStartTop(){ return(Parameters::startTop) ; }
 void Parameters::setStartTop(Top* top){ Parameters::startTop = top ; }
@@ -27,3 +38,6 @@ void Parameters::setActiveNarc(Narc* arc){ Parameters::activeNarc = arc ; }
 
 bool Parameters::isApplicationStarted(){ return(Parameters::applicationStarted) ; }
 void Parameters::switchApplicationStartState(){ Parameters::applicationStarted = !Parameters::applicationStarted ; }
+
+float Parameters::getPheromonesIncrement(){ return(Parameters::phermomonesIncrement) ; }
+float Parameters::getPheromonesDecrement(){ return(Parameters::phermomonesDecrement) ; }

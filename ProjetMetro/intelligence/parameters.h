@@ -9,6 +9,8 @@ private:
     static Top* endTop ;
 
     static bool applicationStarted ;
+    static float phermomonesIncrement ;
+    static float phermomonesDecrement ;
 
     static Top* hoveredTop ;
     static Narc* hoveredNarc ;
@@ -35,6 +37,11 @@ public:
 
     static bool isApplicationStarted() ;
     static void switchApplicationStartState() ;
+
+    static float getPheromonesIncrement() ;
+    static float getPheromonesDecrement() ;
+
+    static float random(float min, float max) ;
 
 } ;
 #endif // PARAMETERS_H

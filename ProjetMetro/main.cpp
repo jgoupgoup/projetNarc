@@ -3,10 +3,7 @@
 
 int main(int argc, char *argv[])
 {
-    DataLoad::tops() ;
-    DataLoad::arcs() ;
-    DataLoad::tracks() ;
-    DataLoad::preciseArcs() ;
+    DataLoad::go() ;
 
     QApplication a(argc, argv);
     Window w;
@@ -16,3 +13,4 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
