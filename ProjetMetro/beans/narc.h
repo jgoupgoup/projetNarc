@@ -55,7 +55,12 @@ public:
     NarcGraphic* getGraphic();
     Narc* setGraphic(NarcGraphic* arcGraphic);
 
+
+    Narc* setScore(float score) ;
+    float getScore() ;
+
     Narc* getInverseArc() ;
+    Narc* evaluate() ;
 
     static Narc* getWeightestNarc() ;
     static void setWeightestNarc(Narc* arc) ;
@@ -65,7 +70,8 @@ public:
     static void setMostPheromonedNarc(Narc* arc) ;
 
     static Narc* getBestNarcFrom(vector<Narc*> listOfNarcs);
-    Narc* getScore();
+
+    static Narc* pickUp(vector<Narc*> list) ;
 };
 
 #endif // ARC_H

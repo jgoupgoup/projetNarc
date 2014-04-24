@@ -15,32 +15,25 @@ void Intelligence::run(){
         if(Parameters::isApplicationStarted()) {
             for(int j=0; j<Ant::list.size(); j++){
                 Ant* ant = Ant::list[j];
-                //Elle tire un narcs aléatoirement pondéramment
-                //Elle ajoute le narc tiré dans sa liste de narcs parcourus
-                //Elle va au top suivant
-
-                Narc* narcChoosed = NULL;
-                narcChoosed = Narc::getBestNarcFrom(ant->getListAroundUnvisitedNarcs()) ;
-
-
-
-                    //On choisi le premier narc de la liste comme élu
-        //            Arc* narcChoosed = ant->getListAroundUnvisitedNarcs()[0];
-
-                    //On parcours le reste de la liste
-          //          for(int k=1 ; k < ant->getListAroundUnvisitedNarcs() ; k++){
-                        //on vérifie si l'arc en question n'est pas meilleur à choisir
-            //            if(ant->getListAroundUnvisitedNarcs()[k].getWeight() > narcChoosed.getWeight())
-                            //si c'est le cas, on le prend
-              //              poidsNarcChoosed = ant->getListAroundUnvisitedNarcs()[k].getWeight();
-
+                if(ant->getCurrentTop() != Parameters::getEndTop()){
+                    Narc* narcChoosed = NULL;
+                    narcChoosed = Narc::getBestNarcFrom(ant->getListAroundUnvisitedNarcs()) ;
+                }
+                else{
+                    // On incréemnte les arcs visités
+                    for(int i = 0 ; i < ant->getVisitedArcs().size() ; i++ ){
+                        Narc* arc = ant->getVisitedArcs()[i] ;
+                        arc->setPheromone(arc->getPheromone() + Parameters::getPheromonesIncrement()) ;
+                    }
+                    Window::main->refreshArcs() ;
+                    ant->reset() ;
+                }
             }
-        }
-        else{ //c'est qu'elle est rendue à la destination
-            //pour tous les nars de sa liste
-                //elle incremente les pheromones
-            //fin pour
-            //reset de la fourmi
+            // On décrémente tous les arcs
+            for(int i = 0 ; i < Narc::list.size() ; i++ ){
+                Narc* arc = Narc::list[i] ;
+                arc->setPheromone(arc->getPheromone() * (1 - Parameters::getPheromonesDecrement())) ;
+            }
         }
     }
 }

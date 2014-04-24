@@ -341,7 +341,7 @@ void Window::on_startApplication_clicked(){
     Parameters::switchApplicationStartState() ;
 
     if(Parameters::isApplicationStarted())
-        Intelligence::runTest() ;
+        Intelligence::run() ;
 
     Window::refreshForm() ;
 }

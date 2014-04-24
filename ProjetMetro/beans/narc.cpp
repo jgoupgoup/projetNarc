@@ -74,25 +74,49 @@ void Narc::defineWeightestNarc(){
 Narc* Narc::getMostPheromonedNarc(){ return(Narc::mostPheromonedNarc) ; }
 void Narc::setMostPheromonedNarc(Narc* arc){ Narc::mostPheromonedNarc = arc ; }
 Narc* Narc::getBestNarcFrom(vector<Narc*> listOfNarcs){
+
+    if(listOfNarcs.size() == 0)
+        cout << "No narcs !!" << endl ;
+
     //On choisi le premier narc de la liste comme élu
     Narc* narcChoosed = listOfNarcs[0];
 
-    //On parcours le reste de la liste
+    //Onévalue chaque Narc
     for(int k=1 ; k < listOfNarcs.size() ; k++){
-        //on vérifie si l'arc en question n'est pas meilleur à choisir
         Narc* narcEnCours = listOfNarcs[k];
-        if(narcEnCours->getScore() > narcChoosed->getScore())
-            //si c'est le cas, on le prend
-            narcChoosed = narcEnCours;
-        }
-    return(narcChoosed);
+        narcEnCours->evaluate() ;
+    }
+
+    return(Narc::pickUp(listOfNarcs));
 }
 
-Narc* Narc::getScore(){
+Narc* Narc::evaluate(){
     float poidsNarc = (Narc::getWeightestNarc()->getWeight() - this->getWeight()) / Narc::getWeightestNarc()->getWeight();
     float pheromoneNarc = this->getPheromone() / Narc::getMostPheromonedNarc()->getPheromone();
     float scoreNarc = (poidsNarc + pheromoneNarc) /2;
-    this->score = scoreNarc;
-
+    this->setScore(scoreNarc);
     return(this);
+}
+
+Narc* Narc::setScore(float score){ this->score = score ; return(this) ; }
+float Narc::getScore(){ return(this->score) ; }
+
+Narc* Narc::pickUp(vector<Narc*> list){
+
+    int limit = list.size() ;
+
+    Narc* choisi = NULL ;
+    float somme = 0 ;
+    for(int i=0 ; i < limit ; i++)
+        somme += list[i]->getScore() ;
+
+    int voulu = Parameters::random(0,somme) ;
+    for(int j=0 ; j < limit ; j++){
+        voulu -= list[j]->getScore() ;
+        if(voulu <= 0){
+            choisi = list[j] ;
+            break ;
+        }
+    }
+    return(choisi) ;
 }
