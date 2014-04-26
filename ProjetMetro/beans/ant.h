@@ -33,6 +33,8 @@ public:
     vector<Narc*> getVisitedArcs();
     vector<Narc*> getListAroundUnvisitedNarcs();
     vector<Narc*> getListAroundNarcs();
+
+    Ant* goThrough(Narc* arc) ;
 };
 
 #endif // ANT_H

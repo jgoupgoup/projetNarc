@@ -1,7 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "../main.h" ;
+#include "../main.h"
 
 namespace Ui {
 class Window;
@@ -32,6 +32,10 @@ public:
     Window* refreshArrets() ;
     Window* refreshVoies() ;
 
+    qint64 getLastRefresh() ;
+    Window* updateLastRefresh() ;
+    Window* pheromonesHaveChanged() ;
+
     ~Window();
 
 public slots:
@@ -39,11 +43,12 @@ public slots:
     void endtopChanged(int index);
     void on_activeArcButton_clicked() ;
     void on_activeInverseArcButton_clicked() ;
-    void on_startApplication_clicked() ;
+    void on_startApplication_released() ;
 
 private:
     Ui::Window *ui;
     QGraphicsScene* scene ;
+    qint64 lastRefresh ;
 };
 
 #endif // WINDOW_H

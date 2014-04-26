@@ -18,6 +18,7 @@
 
 // Inclusions Qt
 
+#include <QThread>
 #include <QMainWindow>
 #include <QApplication>
 #include <QtCore>
@@ -41,6 +42,7 @@ class Ant ;
 class Track ;
 class TopGraphic ;
 class NarcGraphic ;
+class Thread ;
 
 #include "beans/top.h"
 #include "beans/narc.h"
@@ -52,8 +54,10 @@ class NarcGraphic ;
 #include "display/arcgraphic.h"
 #include "display/scenegraphic.h"
 
+
 #include "intelligence/dataload.h"
 #include "intelligence/parameters.h"
 #include "intelligence/intelligence.h"
+#include "intelligence/thread.h"
 
 #endif // MAIN_H

@@ -11,6 +11,7 @@ Window::Window(QWidget *parent) :
 
     this->initScene() ;
     this->initForm() ;
+    this->lastRefresh = NULL ;
 }
 
 Window* Window::initScene(){
@@ -24,18 +25,19 @@ Window* Window::initScene(){
 
     this->initTops();
     this->initArcs();
+    return(this) ;
 }
 
 Window* Window::initTops(){
 
     float minX = 9999999 ; float maxX = -9999999 ;
     float minY = 9999999 ; float maxY = -9999999 ;
-    float substractX = NULL; float divideX = NULL;
-    float substractY = NULL; float divideY = NULL;
+    float substractX = 0; float divideX = 0;
+    float substractY = 0; float divideY = 0;
 
     vector<Top*> list = Top::getList() ;
 
-    for(int i = 0 ; i < list.size() ; i++ ) {
+    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
         if(top->getX() < minX) minX = top->getX() ;
         if(top->getX() > maxX) maxX = top->getX() ;
@@ -46,7 +48,7 @@ Window* Window::initTops(){
     substractX = minX ; divideX = maxX - substractX ;
     substractY = minY ; divideY = maxY - substractY ;
 
-    for(int i = 0 ; i < list.size() ; i++ ) {
+    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
         float topX = ((top->getX() - substractX) / divideX) * (this->ui->graphic->width() - (2 * TopGraphic::size)) ;
         float topY = (-1) * ((top->getY() - substractY) / divideY) * (this->ui->graphic->height() - (2 * TopGraphic::size)) ;
@@ -64,7 +66,7 @@ Window* Window::initTops(){
 Window* Window::initArcs(){
 
     vector<Narc*> arcList = Narc::getList() ;
-    for(int i = 0 ; i < arcList.size() ; i++ ) {
+    for(unsigned int i = 0 ; i < arcList.size() ; i++ ) {
         Narc* arc = arcList[i] ;
         NarcGraphic* arcGraphic = new NarcGraphic(
             arc->getStartTop()->getGraphic()->getX() + (TopGraphic::size/2),
@@ -93,7 +95,7 @@ Window* Window::initParcours(){
     this->ui->starttop->addItem("", -1);
     this->ui->endtop->addItem("", -1);
 
-    for(int i = 0 ; i < list.size() ; i++ ) {
+    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
         this->ui->starttop->addItem(top->getName().c_str(), top->getId());
         this->ui->endtop->addItem(top->getName().c_str(), top->getId());
@@ -105,18 +107,40 @@ Window* Window::initParcours(){
     return(this) ;
 }
 
+Window* Window::pheromonesHaveChanged(){
+
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    if(this->getLastRefresh() == NULL || currentDateTime.toMSecsSinceEpoch() - this->getLastRefresh() > 1000){
+        this->updateLastRefresh() ;
+        this->refreshArcs() ;
+    }
+    return(this) ;
+}
+
+Window* Window::updateLastRefresh(){
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    this->lastRefresh = currentDateTime.toMSecsSinceEpoch() ;
+    return(this) ;
+}
+
+qint64 Window::getLastRefresh(){
+    return(this->lastRefresh) ;
+}
+
 Window* Window::refresh(){
     this->refreshScene()->refreshForm() ;
+    return(this) ;
 }
 
 Window* Window::refreshScene(){
     this->refreshTops()->refreshArcs() ;
+    return(this) ;
 }
 
 Window* Window::refreshTops(){
     vector<Top*> list = Top::getList() ;
 
-    for(int i = 0 ; i < list.size() ; i++ ) {
+    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
 
         if(top == Parameters::getHoveredTop()){
@@ -163,26 +187,24 @@ Window* Window::refreshTops(){
 
 Window* Window::refreshArcs(){
 
-    vector<Narc*> list = Narc::getList() ;
-
     /* Refresh thickness */
     float max = -9999999999 ;
     float min = 99999999999 ;
-    for(int i = 0 ; i < Narc::list.size() ; i++ ){
+    for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ){
         Narc* arc = Narc::list[i] ;
         if(arc->getPheromone() < min) min = arc->getPheromone() ;
         if(arc->getPheromone() > max ) max = arc->getPheromone() ;
     }
 
     if(max > 0){
-        for(int i = 0 ; i < Narc::list.size() ; i++ ){
+        for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ){
             Narc* arc = Narc::list[i] ;
             arc->getGraphic()->setThickness((((arc->getPheromone() - min) / max)*4.9)+1.1) ;
         }
     }
 
-    for(int i = 0 ; i < list.size() ; i++ ) {
-        Narc* arc = list[i] ;
+    for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ) {
+        Narc* arc = Narc::list[i] ;
 
         if(arc == Parameters::getHoveredNarc()){
             QPen* pen = new QPen(NarcGraphic::hoverColor) ;
@@ -206,11 +228,13 @@ Window* Window::refreshArcs(){
             arc->getGraphic()->setZValue(15) ;
         }
     }
+
     return(this) ;
 }
 
 Window* Window::refreshForm(){
     this->refreshEnds()->refreshArrets()->refreshVoies() ;
+    return(this) ;
 }
 
 Window* Window::refreshEnds(){
@@ -328,7 +352,7 @@ void Window::on_activeInverseArcButton_clicked(){
     this->refreshForm() ;
 }
 
-void Window::on_startApplication_clicked(){
+void Window::on_startApplication_released(){
     QMessageBox messageBox;
     if(!Parameters::isApplicationStarted()){
         if(Parameters::getStartTop() == NULL || Parameters::getEndTop() == NULL || Parameters::getStartTop() == Parameters::getEndTop()){
@@ -341,7 +365,9 @@ void Window::on_startApplication_clicked(){
     Parameters::switchApplicationStartState() ;
 
     if(Parameters::isApplicationStarted())
-        Intelligence::run() ;
+        Intelligence::t.start();
+    else
+        Intelligence::t.quit();
 
     Window::refreshForm() ;
 }

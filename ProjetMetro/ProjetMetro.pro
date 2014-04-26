@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     intelligence/parameters.cpp \
     display/scenegraphic.cpp \
     intelligence/dataload.cpp \
-    beans/narc.cpp
+    beans/narc.cpp \
+    intelligence/thread.cpp
 
 HEADERS  += main.h \
         display/window.h \
@@ -36,6 +37,7 @@ HEADERS  += main.h \
     intelligence/parameters.h \
     display/scenegraphic.h \
     intelligence/dataload.h \
-    beans/narc.h
+    beans/narc.h \
+    intelligence/thread.h
 
 FORMS    += window.ui
