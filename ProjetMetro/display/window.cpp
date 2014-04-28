@@ -375,12 +375,13 @@ void Window::on_startApplication_released(){
 }
 
 void Window::refreshSlot(){
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    if(this->getLastRefresh() == NULL || currentDateTime.toMSecsSinceEpoch() - this->getLastRefresh() > 1000){
+    /*QDateTime currentDateTime = QDateTime::currentDateTime();
+    if(this->getLastRefresh() == NULL || currentDateTime.toMSecsSinceEpoch() - this->getLastRefresh() > 2000){
         this->updateLastRefresh() ;
-        this->refreshArcs() ;
-        cout << "Refresh : " << this->getLastRefresh() << endl ;
-    }
+
+    }*/
+    this->refreshArcs() ;
+    Parameters::condition.wakeAll();
 }
 
 

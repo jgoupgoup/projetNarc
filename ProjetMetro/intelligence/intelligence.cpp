@@ -42,9 +42,10 @@ void Intelligence::run(){
                     }
                     ant->reset() ;
                     emit Intelligence::t.pheromonesChanged();
+                    Parameters::mutex.lock();
+                    Parameters::condition.wait(&Parameters::mutex) ;
+                    Parameters::mutex.unlock();
                 }
-
-
             }
 
             // On décrémente tous les arcs
