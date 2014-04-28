@@ -8,7 +8,7 @@ class Ant
 private:
     int id;
     string name;
-    vector<Narc*> visitedArcs;
+    QVector<Narc*> visitedArcs;
 
 
 public:
@@ -16,8 +16,8 @@ public:
     Ant();
 
     //Variables globales
-    static vector<Ant*> list;
-    static vector<Ant*> getList() ;
+    static QVector<Ant*> list;
+    static QVector<Ant*> getList() ;
     static void resetAll() ;
 
     Top* currentTop ;
@@ -30,9 +30,9 @@ public:
     Ant* reset();
     Ant* setCurrentTop(Top* currentTop);
     Top* getCurrentTop();
-    vector<Narc*> getVisitedArcs();
-    vector<Narc*> getListAroundUnvisitedNarcs();
-    vector<Narc*> getListAroundNarcs();
+    QVector<Narc*> getVisitedArcs();
+    QVector<Narc*> getListAroundUnvisitedNarcs();
+    QVector<Narc*> getListAroundNarcs();
 
     Ant* goThrough(Narc* arc) ;
 };

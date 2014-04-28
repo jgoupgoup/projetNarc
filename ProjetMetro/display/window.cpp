@@ -35,7 +35,7 @@ Window* Window::initTops(){
     float substractX = 0; float divideX = 0;
     float substractY = 0; float divideY = 0;
 
-    vector<Top*> list = Top::getList() ;
+    QVector<Top*> list = Top::getList() ;
 
     for(unsigned int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
@@ -65,7 +65,7 @@ Window* Window::initTops(){
 
 Window* Window::initArcs(){
 
-    vector<Narc*> arcList = Narc::getList() ;
+    QVector<Narc*> arcList = Narc::getList() ;
     for(unsigned int i = 0 ; i < arcList.size() ; i++ ) {
         Narc* arc = arcList[i] ;
         NarcGraphic* arcGraphic = new NarcGraphic(
@@ -90,7 +90,7 @@ Window* Window::initForm(){
 }
 
 Window* Window::initParcours(){
-    vector<Top*> list = Top::getList() ;
+    QVector<Top*> list = Top::getList() ;
 
     this->ui->starttop->addItem("", -1);
     this->ui->endtop->addItem("", -1);
@@ -138,7 +138,7 @@ Window* Window::refreshScene(){
 }
 
 Window* Window::refreshTops(){
-    vector<Top*> list = Top::getList() ;
+    QVector<Top*> list = Top::getList() ;
 
     for(unsigned int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;

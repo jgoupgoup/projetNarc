@@ -7,7 +7,7 @@ class Track
 {
 private:
     string id;
-    vector<Narc*> arcs;
+    QVector<Narc*> arcs;
     QColor color;
 
 public:
@@ -15,8 +15,8 @@ public:
     Track(string id);
 
     //Variables globales
-    static vector<Track*> list;
-    static vector<Track*> getList();
+    static QVector<Track*> list;
+    static QVector<Track*> getList();
     static Track* getById(string id) ;
 
     //Methodes

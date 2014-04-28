@@ -17,8 +17,8 @@ public:
     Top(int id);
 
     //Variables globales
-    static vector<Top*> list;
-    static vector<Top*> getList();
+    static QVector<Top*> list;
+    static QVector<Top*> getList();
     static Top* getById(int id);
 
     //Methodes

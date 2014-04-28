@@ -1,10 +1,10 @@
 #include "../main.h"
 
 // Static
-vector<Top*> Top::list;
-vector<Top*> Top::getList(){ return Top::list; }
+QVector<Top*> Top::list;
+QVector<Top*> Top::getList(){ return Top::list; }
 Top* Top::getById(int id){
-    vector<Top*> list = Top::getList() ;
+    QVector<Top*> list = Top::getList() ;
     for(unsigned int i = 0 ; i < list.size() ; i++){
         Top* top = list[i] ;
         if(top->getId() == id) return(top) ;

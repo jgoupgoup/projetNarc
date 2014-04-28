@@ -1,7 +1,7 @@
 #include "../main.h"
 
-vector<Ant*> Ant::list;
-vector<Ant*> Ant::getList(){ return Ant::list; }
+QVector<Ant*> Ant::list;
+QVector<Ant*> Ant::getList(){ return Ant::list; }
 
 Ant::Ant() {
     this->id = list.size();
@@ -37,7 +37,7 @@ Ant* Ant::goThrough(Narc* arc){
 }
 
 
-vector<Narc*> Ant::getVisitedArcs(){ return this->visitedArcs; }
+QVector<Narc*> Ant::getVisitedArcs(){ return this->visitedArcs; }
 
 
 Ant* Ant::reset(){
@@ -49,9 +49,9 @@ Ant* Ant::setCurrentTop(Top* currentTop){
     this->currentTop = currentTop;
     return this;
 }
-vector<Narc*> Ant::getListAroundUnvisitedNarcs(){
-    vector<Narc*> listAroundUnvisitedNarcs ;
-    vector<Narc*> listAroundNarcs = this->getListAroundNarcs();
+QVector<Narc*> Ant::getListAroundUnvisitedNarcs(){
+    QVector<Narc*> listAroundUnvisitedNarcs ;
+    QVector<Narc*> listAroundNarcs = this->getListAroundNarcs();
     bool alreadyVisited = false ;
 
     for(unsigned int i=0; i<listAroundNarcs.size(); i++){
@@ -73,8 +73,8 @@ vector<Narc*> Ant::getListAroundUnvisitedNarcs(){
     cout << " and " << listAroundUnvisitedNarcs.size() << " are not visited" << endl ;
     return listAroundUnvisitedNarcs;
 }
-vector<Narc*> Ant::getListAroundNarcs(){
-    vector<Narc*> listAroundNarcs;
+QVector<Narc*> Ant::getListAroundNarcs(){
+    QVector<Narc*> listAroundNarcs;
     for(unsigned int k=0; k<Narc::list.size(); k++){
         Narc* narc = Narc::list[k];
         if(this->getCurrentTop() == narc->getStartTop()){

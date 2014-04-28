@@ -1,9 +1,9 @@
 #include "../main.h"
 
-vector<Track*> Track::list;
-vector<Track*> Track::getList(){ return Track::list; }
+QVector<Track*> Track::list;
+QVector<Track*> Track::getList(){ return Track::list; }
 Track* Track::getById(string id){
-    vector<Track*> list = Track::getList() ;
+    QVector<Track*> list = Track::getList() ;
     for(unsigned int i = 0 ; i < list.size() ; i++){
         Track* track = list[i] ;
         if(track->getId() == id) return(track) ;

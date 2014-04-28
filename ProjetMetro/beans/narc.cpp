@@ -1,9 +1,9 @@
 #include "../main.h"
 
-vector<Narc*> Narc::list;
-vector<Narc*> Narc::getList(){ return Narc::list; }
+QVector<Narc*> Narc::list;
+QVector<Narc*> Narc::getList(){ return Narc::list; }
 Narc* Narc::getById(int id){
-    vector<Narc*> list = Narc::getList() ;
+    QVector<Narc*> list = Narc::getList() ;
     for(int i = 0 ; i < list.size() ; i++){
         Narc* arc = list[i] ;
         if(arc->getId() == id) return(arc) ;
@@ -50,7 +50,7 @@ NarcGraphic* Narc::getGraphic(){ return(this->graphic) ; }
 Narc* Narc::setGraphic(NarcGraphic* arcGraphic){ this->graphic = arcGraphic ; return(this) ; }
 
 Narc* Narc::getInverseArc(){
-    vector<Narc*> list = Narc::getList() ;
+    QVector<Narc*> list = Narc::getList() ;
     for(int i = 0 ; i < list.size() ; i++ ) {
         Narc* arc = list[i] ;
         if(arc->getEndTop() == this->getStartTop()){
@@ -73,7 +73,7 @@ void Narc::defineWeightestNarc(){
 
 Narc* Narc::getMostPheromonedNarc(){ return(Narc::mostPheromonedNarc) ; }
 void Narc::setMostPheromonedNarc(Narc* arc){ Narc::mostPheromonedNarc = arc ; }
-Narc* Narc::getBestNarcFrom(vector<Narc*> listOfNarcs){
+Narc* Narc::getBestNarcFrom(QVector<Narc*> listOfNarcs){
 
     if(listOfNarcs.size() == 0)
         cout << "No narcs !!" << endl ;
@@ -101,7 +101,7 @@ Narc* Narc::evaluate(){
 Narc* Narc::setScore(float score){ this->score = score ; return(this) ; }
 float Narc::getScore(){ return(this->score) ; }
 
-Narc* Narc::pickUp(vector<Narc*> list){
+Narc* Narc::pickUp(QVector<Narc*> list){
 
     int limit = list.size() ;
 
