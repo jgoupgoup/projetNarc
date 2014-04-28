@@ -1,9 +1,9 @@
 #include "../main.h"
 
-vector<Narc*> Narc::list;
-vector<Narc*> Narc::getList(){ return Narc::list; }
+QVector<Narc*> Narc::list;
+QVector<Narc*> Narc::getList(){ return Narc::list; }
 Narc* Narc::getById(int id){
-    vector<Narc*> list = Narc::getList() ;
+    QVector<Narc*> list = Narc::getList() ;
     for(int i = 0 ; i < list.size() ; i++){
         Narc* arc = list[i] ;
         if(arc->getId() == id) return(arc) ;
@@ -17,7 +17,7 @@ Narc* Narc::mostPheromonedNarc = NULL ;
 Narc::Narc(){
     this->id = list.size();
     this->setAvailability(true) ;
-    this->setPheromone(0) ;
+    this->setPheromone(1) ;
     Narc::list.push_back(this);
 }
 int Narc::getId(){ return(this->id);}
@@ -41,7 +41,7 @@ float Narc::getPheromone(){ return(this->pheromone);}
 Narc* Narc::setPheromone(float pheromone){
     this->pheromone = pheromone ;
     if(Narc::getMostPheromonedNarc() == NULL) Narc::setMostPheromonedNarc(this) ;
-    else if(Narc::getMostPheromonedNarc()->getPheromone() > this->getPheromone())
+    else if(Narc::getMostPheromonedNarc()->getPheromone() < this->getPheromone())
         Narc::setMostPheromonedNarc(this) ;
     return(this) ;
 }
@@ -50,7 +50,7 @@ NarcGraphic* Narc::getGraphic(){ return(this->graphic) ; }
 Narc* Narc::setGraphic(NarcGraphic* arcGraphic){ this->graphic = arcGraphic ; return(this) ; }
 
 Narc* Narc::getInverseArc(){
-    vector<Narc*> list = Narc::getList() ;
+    QVector<Narc*> list = Narc::getList() ;
     for(int i = 0 ; i < list.size() ; i++ ) {
         Narc* arc = list[i] ;
         if(arc->getEndTop() == this->getStartTop()){
@@ -66,28 +66,46 @@ void Narc::defineWeightestNarc(){
     for(int i = 0 ; i < Narc::list.size() ; i++){
         Narc* arc = Narc::list[i] ;
         if(Narc::getWeightestNarc() == NULL) Narc::setWeightestNarc(arc) ;
-        else if(Narc::getWeightestNarc()->getWeight() > arc->getWeight())
+        else if(Narc::getWeightestNarc()->getWeight() < arc->getWeight())
             Narc::setWeightestNarc(arc) ;
     }
 }
 
 Narc* Narc::getMostPheromonedNarc(){ return(Narc::mostPheromonedNarc) ; }
 void Narc::setMostPheromonedNarc(Narc* arc){ Narc::mostPheromonedNarc = arc ; }
-Narc* Narc::getBestNarcFrom(vector<Narc*> listOfNarcs){
+Narc* Narc::getBestNarcFrom(QVector<Narc*> list){
 
-    if(listOfNarcs.size() == 0)
-        cout << "No narcs !!" << endl ;
+    if(list.size() == 0)
+        return NULL;
 
-    //On choisi le premier narc de la liste comme élu
-    Narc* narcChoosed = listOfNarcs[0];
+    //On évalue chaque Narc
+    for(int k=0 ; k < list.size() ; k++)
+        list[k]->evaluate() ;
 
-    //Onévalue chaque Narc
-    for(int k=1 ; k < listOfNarcs.size() ; k++){
-        Narc* narcEnCours = listOfNarcs[k];
-        narcEnCours->evaluate() ;
+    int limit = list.size() ;
+
+    Narc* choisi = NULL ;
+    float somme = 0 ;
+    for(int i=0 ; i < limit ; i++)
+        somme += list[i]->getScore() ;
+
+    float voulu = Parameters::random(0,somme) ;
+    //cout << "Somme : " << somme << " - Random : " << voulu << endl ;
+    for(int j=0 ; j < limit ; j++){
+        voulu -= list[j]->getScore() ;
+        if(voulu <= 0){
+            choisi = list[j] ;
+            break ;
+        }
     }
 
-    return(Narc::pickUp(listOfNarcs));
+   /* for(int i = 0 ; i < list.size() ; i++){
+        cout << list[i]->getId() << " - Ligne " << list[i]->getTrack()->getId() << " - Score : " << list[i]->getScore() ;
+        if(list[i] == choisi) cout << " => Choisi" ;
+        cout << endl ;
+    }*/
+    //cout << endl ;
+    return(choisi) ;
 }
 
 Narc* Narc::evaluate(){
@@ -101,22 +119,3 @@ Narc* Narc::evaluate(){
 Narc* Narc::setScore(float score){ this->score = score ; return(this) ; }
 float Narc::getScore(){ return(this->score) ; }
 
-Narc* Narc::pickUp(vector<Narc*> list){
-
-    int limit = list.size() ;
-
-    Narc* choisi = NULL ;
-    float somme = 0 ;
-    for(int i=0 ; i < limit ; i++)
-        somme += list[i]->getScore() ;
-
-    int voulu = Parameters::random(0,somme) ;
-    for(int j=0 ; j < limit ; j++){
-        voulu -= list[j]->getScore() ;
-        if(voulu <= 0){
-            choisi = list[j] ;
-            break ;
-        }
-    }
-    return(choisi) ;
-}

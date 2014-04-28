@@ -3,7 +3,7 @@
 
 // Inclusions C++
 
-#include <vector>
+#include <QVector>
 #include <iostream>
 #include <algorithm>
 #include <numeric>

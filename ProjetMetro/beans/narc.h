@@ -24,11 +24,11 @@ public:
     Narc();
 
     // Methodes globales
-    static vector<Narc*> getList();
+    static QVector<Narc*> getList();
     static Narc* getById(int id);
 
     //Variables globales, en static
-    static vector<Narc*> list;
+    static QVector<Narc*> list;
 
 
     //Methodes
@@ -69,9 +69,9 @@ public:
     static Narc* getMostPheromonedNarc() ;
     static void setMostPheromonedNarc(Narc* arc) ;
 
-    static Narc* getBestNarcFrom(vector<Narc*> listOfNarcs);
+    static Narc* getBestNarcFrom(QVector<Narc*> listOfNarcs);
 
-    static Narc* pickUp(vector<Narc*> list) ;
+    static Narc* pickUp(QVector<Narc*> list) ;
 };
 
 #endif // ARC_H

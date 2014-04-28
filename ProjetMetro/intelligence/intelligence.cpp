@@ -14,27 +14,40 @@ void Intelligence::creationFourmis(int nbFourmis){
 
 void Intelligence::run(){
     new Ant() ;
+    int nbAntReseted = 0;
+    int nbAntArrived = 0;
     while(1){
         if(Parameters::isApplicationStarted()) {
-            for(unsigned int j=0; j<Ant::list.size(); j++){
+            for(int j=0; j<Ant::list.size(); j++){
                 Ant* ant = Ant::list[j];
                 if(ant->getCurrentTop() != Parameters::getEndTop()){
-                    Narc* narcChoosed = NULL;
-                    narcChoosed = Narc::getBestNarcFrom(ant->getListAroundUnvisitedNarcs()) ;
-                    ant->goThrough(narcChoosed) ;
+                    Narc* narcChoosed = ant->chooseNarc() ;
+                    if(narcChoosed == NULL){
+                        ant->reset();
+                        nbAntReseted += 1;
+                        cout << nbAntReseted << " fourmis se sont perdues..." << endl ;
+                    }
+                    else{
+                        ant->goThrough(narcChoosed) ;
+                    }
                 }
                 else{
+                    nbAntArrived += 1;
+                    cout << nbAntArrived << " fourmis sont arrivées à destination en parcourant " << ant->getPathLength() << endl;
                     // On incréemnte les arcs visités
-                    for(unsigned int i = 0 ; i < ant->getVisitedArcs().size() ; i++ ){
+                    for( int i = 0 ; i < ant->getVisitedArcs().size() ; i++ ){
                         Narc* arc = ant->getVisitedArcs()[i] ;
-                        arc->setPheromone(arc->getPheromone() + Parameters::getPheromonesIncrement()) ;
+                        arc->setPheromone(arc->getPheromone() + ant->getPheromonesIncrement()) ;
                     }
-                    Window::main->refreshArcs() ;
                     ant->reset() ;
+                    emit Intelligence::t.globalRefresh() ;
                 }
+
+
             }
+
             // On décrémente tous les arcs
-            for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ){
+            for( int i = 0 ; i < Narc::list.size() ; i++ ){
                 Narc* arc = Narc::list[i] ;
                 arc->setPheromone(arc->getPheromone() * (1 - Parameters::getPheromonesDecrement())) ;
             }
