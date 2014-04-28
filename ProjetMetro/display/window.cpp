@@ -375,8 +375,11 @@ void Window::on_startApplication_released(){
 }
 
 void Window::refreshSlot(){
+    cout << "Refresh" << endl ;
     this->refreshArcs() ;
+    Parameters::mutex.lock();
     Parameters::condition.wakeAll();
+    Parameters::mutex.unlock();
 }
 
 

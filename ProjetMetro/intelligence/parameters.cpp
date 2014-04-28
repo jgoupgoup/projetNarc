@@ -2,7 +2,7 @@
 
 bool Parameters::applicationStarted = false ;
 float Parameters::phermomonesIncrement = 1 ;
-float Parameters::phermomonesDecrement = 0.00002 ;
+float Parameters::phermomonesDecrement = 0.02 ;
 
 QMutex Parameters::mutex ;
 QWaitCondition Parameters::condition ;

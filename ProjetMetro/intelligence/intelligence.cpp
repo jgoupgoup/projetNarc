@@ -43,7 +43,7 @@ void Intelligence::run(){
                     ant->reset() ;
                     emit Intelligence::t.pheromonesChanged();
                     Parameters::mutex.lock();
-                    Parameters::condition.wait(&Parameters::mutex) ;
+                    Parameters::condition.wait(&Parameters::mutex, 500) ;
                     Parameters::mutex.unlock();
                 }
             }
