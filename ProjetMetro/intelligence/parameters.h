@@ -1,6 +1,8 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
+#include "../main.h"
+
 class Parameters
 {
 
@@ -16,9 +18,11 @@ private:
     static Narc* hoveredNarc ;
     static Narc* activeNarc ;
 
-
 public:
     Parameters();
+
+    static QWaitCondition condition;
+    static QMutex mutex;
 
     static Top* getStartTop() ;
     static void setStartTop(Top* top) ;

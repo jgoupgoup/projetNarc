@@ -4,6 +4,9 @@ bool Parameters::applicationStarted = false ;
 float Parameters::phermomonesIncrement = 1 ;
 float Parameters::phermomonesDecrement = 0.00002 ;
 
+QMutex Parameters::mutex ;
+QWaitCondition Parameters::condition ;
+
 Top* Parameters::startTop = NULL ;
 Top* Parameters::endTop = NULL ;
 Top* Parameters::hoveredTop = NULL ;

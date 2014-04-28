@@ -31,6 +31,8 @@
 #include <QGraphicsEllipseItem>
 #include <QGraphicsRectItem>
 #include <QMessageBox>
+#include <QWaitCondition>
+#include <QMutex>
 
 using namespace std;
 
