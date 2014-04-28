@@ -40,12 +40,12 @@ void NarcGraphic::mousePressEvent(QGraphicsSceneMouseEvent *event){
 }
 
 void NarcGraphic::hoverEnterEvent(QGraphicsSceneHoverEvent *event){
-    Parameters::setHoveredNarc(this->getArc()) ;
-    Window::main->refreshArcs() ;
+    //Parameters::setHoveredNarc(this->getArc()) ;
+    //Window::main->refreshArcs() ;
 }
 
 void NarcGraphic::hoverLeaveEvent(QGraphicsSceneHoverEvent *event){
-    Parameters::setHoveredNarc(NULL) ;
-    Window::main->refreshArcs() ;
+    //Parameters::setHoveredNarc(NULL) ;
+    //Window::main->refreshArcs() ;
 }
 

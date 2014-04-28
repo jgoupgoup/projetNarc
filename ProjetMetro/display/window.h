@@ -44,6 +44,7 @@ public slots:
     void on_activeArcButton_clicked() ;
     void on_activeInverseArcButton_clicked() ;
     void on_startApplication_released() ;
+    void refreshSlot() ;
 
 private:
     Ui::Window *ui;

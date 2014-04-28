@@ -19,6 +19,7 @@ public:
     static QVector<Ant*> list;
     static QVector<Ant*> getList() ;
     static void resetAll() ;
+    static float bestPathLength ;
 
     Top* currentTop ;
 
@@ -31,10 +32,19 @@ public:
     Ant* setCurrentTop(Top* currentTop);
     Top* getCurrentTop();
     QVector<Narc*> getVisitedArcs();
-    QVector<Narc*> getListAroundUnvisitedNarcs();
+    QVector<Narc*> removeVisitedNarcs(QVector<Narc*> list) ;
     QVector<Narc*> getListAroundNarcs();
 
     Ant* goThrough(Narc* arc) ;
+    Narc* chooseNarc() ;
+    Narc* pickUp(QVector<Narc*> list) ;
+
+    float getPathLength() ;
+    float getPheromonesIncrement() ;
+
+    Narc* getRollBackNarc() ;
+    QVector<Narc*> removeRollbackNarc(QVector<Narc*> narcs) ;
+    QVector<Narc*> removeDisabledNarcs(QVector<Narc*> narcsChoosable) ;
 };
 
 #endif // ANT_H

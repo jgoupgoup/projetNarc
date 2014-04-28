@@ -36,6 +36,7 @@ float TopGraphic::getY(){ return(this->y) ; }
 TopGraphic* TopGraphic::setTop(Top* top){
     this->top  = top ;
     top->setGraphic(this) ;
+    return(this) ;
 }
 
 Top* TopGraphic::getTop(){ return(this->top) ; }

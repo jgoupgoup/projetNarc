@@ -5,5 +5,6 @@ Thread::Thread()
 }
 
 void Thread::run(){
-    Intelligence::runTest() ;
+    connect(this, SIGNAL(pheromonesChanged()), Window::main, SLOT(refreshSlot()));
+    Intelligence::run() ;
 }

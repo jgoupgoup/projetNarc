@@ -4,7 +4,7 @@ QVector<Track*> Track::list;
 QVector<Track*> Track::getList(){ return Track::list; }
 Track* Track::getById(string id){
     QVector<Track*> list = Track::getList() ;
-    for(unsigned int i = 0 ; i < list.size() ; i++){
+    for( int i = 0 ; i < list.size() ; i++){
         Track* track = list[i] ;
         if(track->getId() == id) return(track) ;
     }

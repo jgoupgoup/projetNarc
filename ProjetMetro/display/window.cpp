@@ -22,7 +22,6 @@ Window* Window::initScene(){
     this->ui->graphic->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->ui->graphic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->ui->graphic->setScene(this->scene);
-
     this->initTops();
     this->initArcs();
     return(this) ;
@@ -37,7 +36,7 @@ Window* Window::initTops(){
 
     QVector<Top*> list = Top::getList() ;
 
-    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
+    for( int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
         if(top->getX() < minX) minX = top->getX() ;
         if(top->getX() > maxX) maxX = top->getX() ;
@@ -48,7 +47,7 @@ Window* Window::initTops(){
     substractX = minX ; divideX = maxX - substractX ;
     substractY = minY ; divideY = maxY - substractY ;
 
-    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
+    for( int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
         float topX = ((top->getX() - substractX) / divideX) * (this->ui->graphic->width() - (2 * TopGraphic::size)) ;
         float topY = (-1) * ((top->getY() - substractY) / divideY) * (this->ui->graphic->height() - (2 * TopGraphic::size)) ;
@@ -66,7 +65,7 @@ Window* Window::initTops(){
 Window* Window::initArcs(){
 
     QVector<Narc*> arcList = Narc::getList() ;
-    for(unsigned int i = 0 ; i < arcList.size() ; i++ ) {
+    for(int i = 0 ; i < arcList.size() ; i++ ) {
         Narc* arc = arcList[i] ;
         NarcGraphic* arcGraphic = new NarcGraphic(
             arc->getStartTop()->getGraphic()->getX() + (TopGraphic::size/2),
@@ -95,7 +94,7 @@ Window* Window::initParcours(){
     this->ui->starttop->addItem("", -1);
     this->ui->endtop->addItem("", -1);
 
-    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
+    for( int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
         this->ui->starttop->addItem(top->getName().c_str(), top->getId());
         this->ui->endtop->addItem(top->getName().c_str(), top->getId());
@@ -107,12 +106,15 @@ Window* Window::initParcours(){
     return(this) ;
 }
 
+
+
 Window* Window::pheromonesHaveChanged(){
 
     QDateTime currentDateTime = QDateTime::currentDateTime();
     if(this->getLastRefresh() == NULL || currentDateTime.toMSecsSinceEpoch() - this->getLastRefresh() > 1000){
         this->updateLastRefresh() ;
         this->refreshArcs() ;
+        cout << "Refresh : " << this->getLastRefresh() << endl ;
     }
     return(this) ;
 }
@@ -140,7 +142,7 @@ Window* Window::refreshScene(){
 Window* Window::refreshTops(){
     QVector<Top*> list = Top::getList() ;
 
-    for(unsigned int i = 0 ; i < list.size() ; i++ ) {
+    for( int i = 0 ; i < list.size() ; i++ ) {
         Top* top = list[i] ;
 
         if(top == Parameters::getHoveredTop()){
@@ -190,20 +192,20 @@ Window* Window::refreshArcs(){
     /* Refresh thickness */
     float max = -9999999999 ;
     float min = 99999999999 ;
-    for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ){
+    for( int i = 0 ; i < Narc::list.size() ; i++ ){
         Narc* arc = Narc::list[i] ;
         if(arc->getPheromone() < min) min = arc->getPheromone() ;
         if(arc->getPheromone() > max ) max = arc->getPheromone() ;
     }
 
     if(max > 0){
-        for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ){
+        for( int i = 0 ; i < Narc::list.size() ; i++ ){
             Narc* arc = Narc::list[i] ;
             arc->getGraphic()->setThickness((((arc->getPheromone() - min) / max)*4.9)+1.1) ;
         }
     }
 
-    for(unsigned int i = 0 ; i < Narc::list.size() ; i++ ) {
+    for( int i = 0 ; i < Narc::list.size() ; i++ ) {
         Narc* arc = Narc::list[i] ;
 
         if(arc == Parameters::getHoveredNarc()){
@@ -370,6 +372,15 @@ void Window::on_startApplication_released(){
         Intelligence::t.quit();
 
     Window::refreshForm() ;
+}
+
+void Window::refreshSlot(){
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    if(this->getLastRefresh() == NULL || currentDateTime.toMSecsSinceEpoch() - this->getLastRefresh() > 1000){
+        this->updateLastRefresh() ;
+        this->refreshArcs() ;
+        cout << "Refresh : " << this->getLastRefresh() << endl ;
+    }
 }
 
 

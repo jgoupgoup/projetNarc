@@ -5,7 +5,7 @@ QVector<Top*> Top::list;
 QVector<Top*> Top::getList(){ return Top::list; }
 Top* Top::getById(int id){
     QVector<Top*> list = Top::getList() ;
-    for(unsigned int i = 0 ; i < list.size() ; i++){
+    for( int i = 0 ; i < list.size() ; i++){
         Top* top = list[i] ;
         if(top->getId() == id) return(top) ;
     }
