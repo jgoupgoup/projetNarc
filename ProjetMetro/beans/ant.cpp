@@ -150,7 +150,7 @@ float Ant::getPheromonesIncrement(){
 
     if(pathLength < Ant::bestPathLength) Ant::bestPathLength = pathLength ;
     float ret = (Ant::bestPathLength / pathLength) * Parameters::getPheromonesIncrement() ;
-    //if(pathLength > Ant::bestPathLength) ret /= 10 ;
+    if(pathLength > Ant::bestPathLength) ret /= 1000 ;
     return(ret) ;
 }
 
